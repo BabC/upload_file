@@ -16,7 +16,7 @@ The uploaded file will be found in node_docker/uploads
 In node_docker repo
 ```
 docker build -t node-app .
-docker run -p 8080:8080 --name node-api -d node-app
+docker run -p 8080:8080 --name node-api -v <local upload directory>:/uploads -d node-app
 ```
 
 In react_docker repo
@@ -29,4 +29,4 @@ Once the file is uploaded, it will be found inside the node-api container, to se
 ```
 docker exec -t -i node-api /bin/bash
 ```
-It will open a bash, then navigate to the /usr/src/app/uploads repo
+It will open a bash, then navigate to the /uploads repo
