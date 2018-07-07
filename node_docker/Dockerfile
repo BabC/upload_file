@@ -17,3 +17,6 @@ COPY . .
 
 EXPOSE 8080
 CMD [ "npm", "start" ]
+
+# Declare volumes
+VOLUME ["/uploads"]

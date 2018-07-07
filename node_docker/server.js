@@ -20,7 +20,7 @@ var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
 
         var oldpath = files.file.path;
-        var newpath = './uploads/' + files.file.name;
+        var newpath = '/uploads/' + files.file.name;
 
         var upStream = fs.createWriteStream(newpath);
 
