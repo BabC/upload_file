@@ -8,6 +8,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "cors": "^2.8.4",
     "express": "^4.16.1",
     "formidable": "^1.2.1"
   }

@@ -1,11 +1,5 @@
 import React, {Component} from "react";
-/*
-import Dropzone from 'react-dropzone';
-*/
 import axios from "axios";
-/*
-import logo from './logo.svg';
-*/
 import "./App.css";
 
 class App extends Component {
@@ -34,9 +28,16 @@ class App extends Component {
     }
 
     resetNotification() {
+        this.setState({notification: null, response: null});
+    }
+
+    setNotification(message, response) {
+        this.resetNotification();
+        this.setState({notification: message, response: response});
         setTimeout(() => {
-            this.setState({notification: null, response: null});
+            this.resetNotification();
         }, 5000);
+
     }
 
     /**
@@ -46,15 +47,11 @@ class App extends Component {
         e.preventDefault(); // Stop form submit
         this.fileUpload()
             .then(response => {
-                console.log(response.data);
-                this.setState({notification: 'Fichier envoyé', response: 'ok'});
-                this.resetNotification();
+                this.setNotification('Fichier envoyé', 'ok');
                 this.resetState();
             })
             .catch(response => {
-                console.log("Erreur", response);
-                this.setState({notification: 'Erreur lors de l\'envoi', response: 'ko'});
-                this.resetNotification();
+                this.setNotification('Erreur lors de l\'envoi', 'ko');
                 this.resetState();
             });
     }
@@ -63,7 +60,13 @@ class App extends Component {
      * Get file
      */
     onChange(e) {
-        this.setState({file: e.target.files[0], type: e.target.name});
+        const file = e.target.files[0];
+        const fileSplit = file.name.split('.');
+        if (fileSplit[fileSplit.length - 1] !== 'torrent') {
+            this.setNotification('Erreur de format', 'ko');
+        } else {
+            this.setState({file: file, type: e.target.name});
+        }
     }
 
     /**
@@ -130,31 +133,3 @@ class App extends Component {
 }
 
 export default App;
-
-/*
-     
-     https://react-dropzone.js.org/
-     
-     
-       onDrop(files) {
-    this.setState({
-      files
-    });
-  }
-     
-     
-     <section>
-        <div className="dropzone">
-          <Dropzone onDrop={this.onDrop.bind(this)}>
-            <p>Try dropping some files here, or click to select files to upload.</p>
-          </Dropzone>
-        </div>
-        <aside>
-          <h2>Dropped files</h2>
-          <ul>
-            {
-              this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
-            }
-          </ul>
-        </aside>
-      </section>*/
