@@ -28,6 +28,7 @@ class App extends Component {
 
     
   fileUpload(file){
+    console.log(process.env.TEST_KEY);
     const url = 'http://localhost:8080/up';
     const formData = new FormData();
     formData.append('file',file)
