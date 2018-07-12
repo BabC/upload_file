@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import axios from "axios";
+import * as APP_CONF from "./conf.json";
 import "./App.css";
+
 
 class App extends Component {
     constructor(props) {
@@ -74,7 +76,6 @@ class App extends Component {
      * @returns {AxiosPromise<any>}
      */
     fileUpload() {
-        // console.log(process.env.TEST_KEY);
         const IP = 'localhost';
         const PORT = '8080';
         const typeFile = this.state.type === 'movieFile' ? '/upMovie' : '/upTVShow';
