@@ -76,8 +76,8 @@ class App extends Component {
      * @returns {AxiosPromise<any>}
      */
     fileUpload() {
-        const IP = 'localhost';
-        const PORT = '8080';
+        const IP = APP_CONF.IP;
+        const PORT = APP_CONF.PORT;
         const typeFile = this.state.type === 'movieFile' ? '/upMovie' : '/upTVShow';
 
         const url = `http://${IP}:${PORT}${typeFile}`;
