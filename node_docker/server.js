@@ -14,7 +14,7 @@ function checkFormat(fileName) {
     return fileSplit[fileSplit.length - 1] !== 'torrent';
 }
 
-function writeFile(endPath,files, res) {
+function writeFile(endPath, files, res) {
     const oldpath = files.file.path;
     const newpath = `W:/upload_file/upload${endPath}` + files.file.name;
     // var newpath = '/uploads/' + files.file.name;
@@ -33,12 +33,12 @@ function writeFile(endPath,files, res) {
     fs.createReadStream(oldpath).pipe(upStream);
 }
 
+function saveFileName(endPath, mailFile, fileName) {
+    fs.appendFileSync(`W:/upload_file/upload${endPath}${mailFile}`, `${fileName}\r\n`);
+}
+
 // App
 const app = express();
-
-app.get('/', (req, res) => {
-    res.send('Hello world\n');
-});
 
 app.post('/upMovie', cors(), (req, res) => {
     // create an incoming form object
@@ -49,7 +49,9 @@ app.post('/upMovie', cors(), (req, res) => {
         if (checkFormat(files.file.name)) {
             res.status(406).send('Format error');
         } else {
-            writeFile('/film/',files, res);
+            const endPath = '/film/';
+            saveFileName(endPath, 'mail_movie_files.txt', files.file.name);
+            writeFile(endPath, files, res);
         }
     });
 });
@@ -63,7 +65,24 @@ app.post('/upTVShow', cors(), (req, res) => {
         if (checkFormat(files.file.name)) {
             res.status(406).send('Format error');
         } else {
-            writeFile('/serie/',files, res);
+            const endPath = '/serie/';
+            saveFileName(endPath, 'mail_tv_show_files.txt', files.file.name);
+            writeFile(endPath, files, res);
+        }
+    });
+});
+
+app.post('/upOther', cors(), (req, res) => {
+// create an incoming form object
+    const form = new formidable.IncomingForm();
+
+    form.parse(req, function (err, fields, files) {
+
+        if (checkFormat(files.file.name)) {
+            res.status(406).send('Format error');
+        } else {
+            const endPath = '/other/';
+            writeFile(endPath, files, res);
         }
     });
 });

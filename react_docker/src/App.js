@@ -78,7 +78,18 @@ class App extends Component {
     fileUpload() {
         const IP = APP_CONF.IP;
         const PORT = APP_CONF.PORT;
-        const typeFile = this.state.type === 'movieFile' ? '/upMovie' : '/upTVShow';
+        let typeFile = this.state.type === 'movieFile' ? '/upMovie' : '/upTVShow';
+        switch (this.state.type) {
+            case 'movieFile':
+                typeFile = '/upMovie';
+                break;
+            case 'tvShowFile':
+                typeFile = '/upTVShow';
+                break;
+            case 'otherFile':
+                typeFile = '/upOther';
+                break;
+        }
 
         const url = `http://${IP}:${PORT}${typeFile}`;
         const formData = new FormData();
@@ -119,6 +130,15 @@ class App extends Component {
                     onChange={this.onChange}
                 />
                 <label className="label-tv-show" htmlFor="tvShowFile">Série</label>
+
+                <input
+                    className="input-file other"
+                    type="file"
+                    id="otherFile"
+                    name="otherFile"
+                    onChange={this.onChange}
+                />
+                <label className="label-other" htmlFor="otherFile">Autre</label>
 
                 <button className={!this.state.file ? 'disable-link' : ''} type="submit"
                         disabled={!this.state.file}>Upload

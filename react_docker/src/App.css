@@ -47,6 +47,10 @@ label.label-movie {
     background: linear-gradient(#ffa674, #ca8059);
 }
 
+label.label-other {
+    background: linear-gradient(#fcefef, #e6dada);
+}
+
 button {
     font-family: 'Lobster', cursive;
     position: absolute;
